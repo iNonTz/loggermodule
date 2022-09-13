@@ -1,0 +1,1 @@
+from .loggermodulex import configLogger
