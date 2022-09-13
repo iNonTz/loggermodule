@@ -1,43 +1,22 @@
 import logging
-import pathlib
 from pathlib import Path
 import sys
 from datetime import datetime
 from logging import handlers
-import toml
 
-path = pathlib.Path(__file__).parent.absolute()
-configfile = path / 'config.toml'
-config = toml.load(configfile)
+LEVEL_LIST = ['NOTSET', 'INFO', 'DEBUG', 'ERROR', 'WARNING']
 
-LEVEL_LIST = ['NONSET', 'INFO', 'DEBUG', 'ERROR', 'WARNING']
+def configLogger(name, filename=None, console_lv=LEVEL_LIST, file_lv=LEVEL_LIST):
 
-def configLogger(name, filename=None, config=None, default_lv=str, console_lv=str, file_lv=str):
-
-    # Checking Level
-    if default_lv and default_lv in LEVEL_LIST:
-        default_lv = default_lv
-    else:
-        default_lv = 'NONSET'
-    
-    if console_lv and console_lv in LEVEL_LIST:
-        console_lv = console_lv
-    else:
-        console_lv = 'NONSET'
-    
-    if file_lv and file_lv in LEVEL_LIST:
-        file_lv = file_lv
-    else:
-        file_lv = 'NONSET'
-
-    logging.getLogger().setLevel(level=default_lv)
+    logging.getLogger().setLevel(level='NOTSET')
     logging.getLogger("filelock").setLevel(logging.ERROR) ## Avoid lockfile log
 
     if filename:
     # Add stdout handler, with level INFO
         console = logging.StreamHandler(sys.stdout)
         console.setLevel(level=console_lv)
-        formatter = logging.Formatter('PID: %(process)d - ThreadID: %(thread)d - Time: %(asctime)s - Level: %(levelname)s - Function: %(funcName)s - Message: %(message)s')
+        formatter = logging.Formatter('[%(asctime)s] [PID:%(thread)d ThreadID:%(thread)d] [%(levelname)s] [%(name)s.%(funcName)s:%(lineno)d]  %(message)s')
+        # formatter = logging.Formatter('Level: %(levelname)s PID: %(process)d - ThreadID: %(thread)d - Time: %(asctime)s -  - Function: %(funcName)s - Message: %(message)s')
         console.setFormatter(formatter)
         logging.getLogger().addHandler(console)
 
