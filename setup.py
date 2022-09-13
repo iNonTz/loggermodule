@@ -7,16 +7,15 @@ README = (HERE / "README.md").read_text()
 #This call to setup() does all the work
 setup(
      name="loggermodule_X",
-     version="1.0.1",
+     version="1.0.4",
      description="Logging in console and collect to file !",
      long_description=README,
      long_description_content_type="text/markdown",
      url="https://github.com/iNonTz/loggermodule",
      author="KHUNANON",
      author_email="ch.khunanon@gmail.com",
-     license="MIT",
+     license="InfoQuest Limited",
      classifiers=[
-         "License :: OSI Approved :: MIT License",
          "Programming Language :: Python :: 3",
          "Programming Language :: Python :: 3.8",
      ],
